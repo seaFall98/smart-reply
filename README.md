@@ -71,7 +71,7 @@ powershell -ExecutionPolicy Bypass -File installers/uninstall.ps1 -KeepData
 
 ```text
 [smart-reply:doc]       本轮必须生成文档
-[smart-reply:inline]    本轮允许直接完整回复
+[smart-reply:inline]    本轮必须直接完整回复，禁止生成文档
 [smart-reply:off]       本轮关闭 Smart Reply
 ```
 
