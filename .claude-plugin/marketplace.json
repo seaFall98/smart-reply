@@ -1,0 +1,17 @@
+{
+  "$schema": "https://anthropic.com/claude-code/marketplace.schema.json",
+  "name": "smart-reply-marketplace",
+  "description": "Official marketplace for the Smart Reply Claude Code plugin.",
+  "owner": {
+    "name": "seaFall98"
+  },
+  "plugins": [
+    {
+      "name": "smart-reply",
+      "description": "Write valuable long-form Claude Code replies into reusable Markdown documents.",
+      "source": ".",
+      "category": "productivity",
+      "homepage": "https://github.com/seaFall98/smart-reply"
+    }
+  ]
+}

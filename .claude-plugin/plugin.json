@@ -1,0 +1,17 @@
+{
+  "name": "smart-reply",
+  "version": "0.1.0",
+  "description": "Write valuable long-form Claude Code replies into reusable Markdown documents.",
+  "author": {
+    "name": "seaFall98"
+  },
+  "homepage": "https://github.com/seaFall98/smart-reply",
+  "repository": "https://github.com/seaFall98/smart-reply",
+  "license": "MIT",
+  "keywords": [
+    "documentation",
+    "hooks",
+    "chinese",
+    "workflow"
+  ]
+}

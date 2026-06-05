@@ -1,0 +1,14 @@
+{
+  "name": "smart-reply",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "engines": {
+    "node": ">=20"
+  },
+  "scripts": {
+    "test": "node --test",
+    "validate:plugin": "claude plugin validate --strict .",
+    "check": "npm test && npm run validate:plugin"
+  }
+}
