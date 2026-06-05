@@ -22,7 +22,8 @@ Smart Reply 使用以下组合：
 - Node.js 20 或更新版本；
 - Claude Code `2.1.163` 或更新版本。
 
-当前版本已使用 Claude Code `2.1.163` 验证。
+最低支持目标为 Claude Code `2.1.163`；当前版本已使用 Claude Code `2.1.165`
+完成端到端验收。
 
 ## 临时加载
 
