@@ -273,7 +273,7 @@ Hook 需要记录“本轮是否已经阻止过”，避免重复阻止。
 使用临时插件目录加载：
 
 ```powershell
-claude --plugin-dir D:\MyCode\smart-reply-project\smart-reply
+claude --plugin-dir <repo>
 ```
 
 该方式只影响当前会话，不修改用户设置。
