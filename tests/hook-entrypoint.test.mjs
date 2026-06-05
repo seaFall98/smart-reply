@@ -47,7 +47,7 @@ test("user-prompt-submit writes state and returns additionalContext", async () =
     {
       session_id: "abcdef123",
       cwd: fixture.cwd,
-      user_prompt: "[smart-reply:doc] 请设计方案",
+      prompt: "[smart-reply:doc] 请设计方案",
     },
     { CLAUDE_PLUGIN_DATA: fixture.dataDir },
   );
@@ -70,7 +70,7 @@ test("stop reads prior mode state and clears it when allowed", async () => {
     {
       session_id: "abcdef123",
       cwd: fixture.cwd,
-      user_prompt: "[smart-reply:inline] 直接回答",
+      prompt: "[smart-reply:inline] 直接回答",
     },
     env,
   );
@@ -86,6 +86,52 @@ test("stop reads prior mode state and clears it when allowed", async () => {
   );
 
   assert.deepEqual(JSON.parse(result.stdout), {});
+  await assert.rejects(
+    readFile(path.join(fixture.dataDir, "state", "abcdef.json"), "utf8"),
+  );
+});
+
+test("oversized stop blocks once then stop_hook_active allows and clears state", async () => {
+  const fixture = await makeFixture();
+  const env = { CLAUDE_PLUGIN_DATA: fixture.dataDir };
+  await runHook(
+    "user-prompt-submit",
+    {
+      session_id: "abcdef123",
+      cwd: fixture.cwd,
+      prompt: "请完整分析",
+    },
+    env,
+  );
+  const blocked = await runHook(
+    "stop",
+    {
+      session_id: "abcdef123",
+      cwd: fixture.cwd,
+      stop_hook_active: false,
+      last_assistant_message: "x".repeat(4000),
+    },
+    env,
+  );
+  assert.equal(JSON.parse(blocked.stdout).decision, "block");
+  assert.equal(
+    JSON.parse(
+      await readFile(path.join(fixture.dataDir, "state", "abcdef.json"), "utf8"),
+    ).mode,
+    "default",
+  );
+
+  const allowed = await runHook(
+    "stop",
+    {
+      session_id: "abcdef123",
+      cwd: fixture.cwd,
+      stop_hook_active: true,
+      last_assistant_message: "x".repeat(4000),
+    },
+    env,
+  );
+  assert.deepEqual(JSON.parse(allowed.stdout), {});
   await assert.rejects(
     readFile(path.join(fixture.dataDir, "state", "abcdef.json"), "utf8"),
   );
@@ -113,9 +159,26 @@ test("all handler exceptions fail open", async () => {
   const fixture = await makeFixture();
   const result = await runHook(
     "user-prompt-submit",
-    { session_id: "abcdef123", cwd: null, user_prompt: "hello" },
+    { session_id: "abcdef123", cwd: null, prompt: "hello" },
     { CLAUDE_PLUGIN_DATA: fixture.dataDir },
   );
   assert.equal(result.code, 0);
   assert.deepEqual(JSON.parse(result.stdout), {});
+});
+
+test("user-prompt-submit accepts legacy user_prompt field", async () => {
+  const fixture = await makeFixture();
+  const result = await runHook(
+    "user-prompt-submit",
+    {
+      session_id: "abcdef123",
+      cwd: fixture.cwd,
+      user_prompt: "[smart-reply:inline] legacy field",
+    },
+    { CLAUDE_PLUGIN_DATA: fixture.dataDir },
+  );
+  assert.match(
+    JSON.parse(result.stdout).hookSpecificOutput.additionalContext,
+    /必须直接在 CLI 完整回复/,
+  );
 });

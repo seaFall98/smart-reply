@@ -58,13 +58,14 @@ test("doc mode explicitly requires a document", () => {
   assert.match(context, /本轮必须生成文档/);
 });
 
-test("inline mode explicitly allows a complete inline reply", () => {
+test("inline mode explicitly requires a complete inline reply and forbids a document", () => {
   const context = buildPromptSubmitResponse({
     config,
     mode: MODES.INLINE,
     outputDirectory: "D:\\project\\smart-reply\\session",
   }).hookSpecificOutput.additionalContext;
-  assert.match(context, /允许直接完整回复/);
+  assert.match(context, /必须直接在 CLI 完整回复/);
+  assert.match(context, /禁止生成 Smart Reply 文档/);
 });
 
 test("allows when stop_hook_active is true", () => {

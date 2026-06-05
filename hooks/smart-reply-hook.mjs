@@ -59,7 +59,9 @@ async function buildContext(input) {
 
 async function handleUserPromptSubmit(input) {
   const context = await buildContext(input);
-  const mode = parseMode(input.user_prompt);
+  const prompt =
+    typeof input.prompt === "string" ? input.prompt : input.user_prompt;
+  const mode = parseMode(prompt);
   await writeTurnState({
     dataDir: context.dataDir,
     sessionId: context.sessionId,

@@ -10,7 +10,8 @@ export function buildPromptSubmitResponse({ config, mode, outputDirectory }) {
   if (mode === MODES.DOC) {
     modeInstruction = "本轮必须生成文档，并遵循 smart-reply Skill。";
   } else if (mode === MODES.INLINE) {
-    modeInstruction = "本轮允许直接完整回复，不强制生成文档。";
+    modeInstruction =
+      "本轮必须直接在 CLI 完整回复，禁止生成 Smart Reply 文档；最终回复长度限制不适用。";
   }
 
   const additionalContext = [

@@ -1,5 +1,5 @@
 import assert from "node:assert/strict";
-import { mkdtemp, readFile, writeFile } from "node:fs/promises";
+import { mkdir, mkdtemp, readFile, writeFile } from "node:fs/promises";
 import { tmpdir } from "node:os";
 import path from "node:path";
 import test from "node:test";
@@ -62,17 +62,38 @@ test("reads an existing state", async () => {
   assert.equal((await readTurnState({ dataDir, sessionId: "abcdef123" })).mode, MODES.OFF);
 });
 
+test("overwrites state for the next turn in the same session", async () => {
+  const dataDir = await makeDataDir();
+  await writeTurnState({
+    dataDir,
+    sessionId: "abcdef123",
+    mode: MODES.DOC,
+    now: new Date("2026-06-06T00:00:00.000Z"),
+  });
+  await writeTurnState({
+    dataDir,
+    sessionId: "abcdef123",
+    mode: MODES.INLINE,
+    now: new Date("2026-06-06T00:01:00.000Z"),
+  });
+  assert.deepEqual(await readTurnState({ dataDir, sessionId: "abcdef123" }), {
+    mode: MODES.INLINE,
+    updatedAt: "2026-06-06T00:01:00.000Z",
+  });
+});
+
 test("returns default state for missing or invalid state", async () => {
   const dataDir = await makeDataDir();
   assert.deepEqual(await readTurnState({ dataDir, sessionId: "missing" }), {
     mode: MODES.DEFAULT,
   });
+  await mkdir(path.join(dataDir, "state"), { recursive: true });
   await writeFile(
-    path.join(dataDir, "invalid.json"),
+    path.join(dataDir, "state", "invalid.json"),
     "{invalid",
     "utf8",
   );
-  assert.deepEqual(await readTurnState({ dataDir, sessionId: "../invalid.json" }), {
+  assert.deepEqual(await readTurnState({ dataDir, sessionId: "invalid" }), {
     mode: MODES.DEFAULT,
   });
 });

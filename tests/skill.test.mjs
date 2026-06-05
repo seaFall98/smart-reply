@@ -26,4 +26,5 @@ test("Smart Reply skill contains the required workflow and safety rules", async 
   assert.match(skill, /\[smart-reply:doc\]/);
   assert.match(skill, /\[smart-reply:inline\]/);
   assert.match(skill, /\[smart-reply:off\]/);
+  assert.match(skill, /必须直接在 CLI 完整回复，禁止生成 Smart Reply 文档/);
 });

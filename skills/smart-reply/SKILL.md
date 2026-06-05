@@ -27,7 +27,7 @@ version: 0.1.0
 ## 覆盖标记
 
 - `[smart-reply:doc]`：本轮必须写文档。
-- `[smart-reply:inline]`：本轮允许直接完整回复，不强制写文档。
+- `[smart-reply:inline]`：本轮必须直接在 CLI 完整回复，禁止生成 Smart Reply 文档。
 - `[smart-reply:off]`：本轮关闭 Smart Reply。
 
 冲突时优先级为 `off > inline > doc`。
