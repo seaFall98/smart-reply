@@ -53,6 +53,7 @@ git diff --check
 | `[smart-reply:inline]` | 通过，强制直接完整回复并跳过文档 |
 | `[smart-reply:off]` | 通过，关闭 Smart Reply 行为 |
 | 非 Git 工作目录 | 通过，使用当前工作目录作为项目根目录 |
+| 同一会话连续生成文档 | 通过，同一目录内文件编号从 `01` 自增到 `02` |
 
 验收期间发现当前 Claude Code 的真实 `UserPromptSubmit` 输入字段为 `prompt`，而旧版
 参考材料使用 `user_prompt`。实现已修正为优先支持 `prompt`，同时保留
