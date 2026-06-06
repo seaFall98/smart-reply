@@ -37,6 +37,21 @@ claude --plugin-dir <repo>
 
 ## 安装
 
+直接让CLAUDE CODE帮你安装
+
+```
+请帮我安装https://github.com/seaFall98/smart-reply这个插件
+```
+
+然后在会话里使用
+
+```
+/reload-plugins #重新加载插件
+/reload-skills #重新加载技能
+```
+
+如果手动安装，步骤如下：
+
 先查看安装器将执行的 Claude Code 原生命令：
 
 ```powershell
@@ -54,6 +69,14 @@ powershell -ExecutionPolicy Bypass -File installers/install.ps1
 
 ## 卸载
 
+直接让CLAUDE CODE帮你卸载
+
+```
+帮我卸载smart-reply
+```
+
+或者手动卸载
+
 ```powershell
 powershell -ExecutionPolicy Bypass -File installers/uninstall.ps1
 ```
@@ -66,8 +89,13 @@ powershell -ExecutionPolicy Bypass -File installers/uninstall.ps1 -KeepData
 
 ## 使用方式
 
-默认情况下，Claude 自行判断有长期价值的长篇内容是否需要写成文档。需要确定行为时，
-使用以下标记：
+默认情况下，Claude 自行判断有长期价值的长篇内容是否需要写成文档。
+
+如图，亲测有效，无需显示提示或显示使用skill。
+
+![image-20260607055346881](C:\Users\seaFall98\AppData\Roaming\Typora\typora-user-images\image-20260607055346881.png)
+
+需要确定行为时，使用以下标记：
 
 ```text
 [smart-reply:doc]       本轮必须生成文档
