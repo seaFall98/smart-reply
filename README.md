@@ -89,11 +89,7 @@ powershell -ExecutionPolicy Bypass -File installers/uninstall.ps1 -KeepData
 
 ## 使用方式
 
-默认情况下，Claude 自行判断有长期价值的长篇内容是否需要写成文档。
-
-如图，亲测有效，无需显示提示或显示使用skill。
-
-![image-20260607055346881](C:\Users\seaFall98\AppData\Roaming\Typora\typora-user-images\image-20260607055346881.png)
+默认情况下，Claude 自行判断有长期价值的长篇内容是否需要写成文档，亲测有效，无需显示提示或显示使用skill。
 
 需要确定行为时，使用以下标记：
 
